@@ -1,0 +1,52 @@
+﻿@model List<Lab3_WorkshopRSVP.Models.Rsvp>
+
+@{
+    ViewData["Title"] = "Workshop Registrations";
+}
+
+<h1>Workshop Registrations</h1>
+
+<p>Here is the list of registered participants.</p>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">
+        No registrations yet.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Full Name</th>
+                <th>Workshop</th>
+                <th>Needs Accommodation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var registration in Model)
+            {
+                <tr>
+                    <td>@registration.FullName</td>
+                    <td>@registration.WorkshopTitle</td>
+                    <td>
+                        @(registration.NeedsAccommodation ? "Yes" : "No")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-controller="Workshops"
+   asp-action="RsvpForm"
+   class="btn btn-primary">
+    Register Another Participant
+</a>
+
+<a asp-controller="Workshops"
+   asp-action="Index"
+   class="btn btn-secondary">
+    Back to Workshops
+</a>

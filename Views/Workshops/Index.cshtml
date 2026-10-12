@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Workshops";
+}
+
+<h1>Workshop RSVP</h1>
+
+<p>
+    Welcome to our Workshop Registration System!
+    Register for a workshop and view all registrations.
+</p>
+
+<h3>Available Workshops</h3>
+
+<ul>
+    <li>Routing Basics</li>
+    <li>EF Core Intro</li>
+    <li>Razor Essentials</li>
+</ul>
+
+<a asp-controller="Workshops"
+   asp-action="RsvpForm"
+   class="btn btn-primary">
+    Register for a Workshop
+</a>
+
+<a asp-controller="Workshops"
+   asp-action="Registrations"
+   class="btn btn-secondary">
+    View Registrations
+</a>
