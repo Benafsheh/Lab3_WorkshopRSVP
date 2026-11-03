@@ -1,12 +1,19 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Lab3_WorkshopRSVP.Data;
 using Lab3_WorkshopRSVP.Models;
 
 namespace Lab3_WorkshopRSVP.Controllers
 {
     public class WorkshopsController : Controller
     {
-        private static List<Rsvp> registrations = new List<Rsvp>();
+        private readonly ApplicationDbContext _context;
+
+        public WorkshopsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
@@ -20,10 +27,9 @@ namespace Lab3_WorkshopRSVP.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Confirm(Rsvp model)
         {
-            registrations.Add(model);
-
             ViewData["Message"] =
                 $"Thanks for registering, {model.FullName}!";
 
@@ -32,6 +38,10 @@ namespace Lab3_WorkshopRSVP.Controllers
 
         public IActionResult Registrations()
         {
+            var registrations = _context.Rsvps
+                .AsNoTracking()
+                .ToList();
+
             return View(registrations);
         }
     }
