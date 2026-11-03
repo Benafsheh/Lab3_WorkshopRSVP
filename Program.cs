@@ -8,9 +8,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Configure Entity Framework Core with SQLite
+var databasePath = Path.Combine(
+    builder.Environment.ContentRootPath,
+    "workshoprsvp.db");
+
+if (!builder.Environment.IsDevelopment())
+{
+    var dataDirectory = Environment.GetEnvironmentVariable("HOME");
+
+    if (!string.IsNullOrEmpty(dataDirectory))
+    {
+        databasePath = Path.Combine(
+            dataDirectory,
+            "workshoprsvp.db");
+    }
+}
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite($"Data Source={databasePath}"));
+
 
 var app = builder.Build();
 
