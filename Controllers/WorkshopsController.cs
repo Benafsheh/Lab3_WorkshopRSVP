@@ -30,6 +30,14 @@ namespace Lab3_WorkshopRSVP.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Confirm(Rsvp model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("RsvpForm", model);
+            }
+
+            _context.Rsvps.Add(model);
+            _context.SaveChanges();
+
             ViewData["Message"] =
                 $"Thanks for registering, {model.FullName}!";
 
